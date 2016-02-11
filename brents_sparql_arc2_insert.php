@@ -12,24 +12,16 @@ $config = array(
 /* instantiation */
 $store = ARC2::getRemoteStore($config);
 
-print_r($config);
-
-//$q = 'SELECT * { ?s ?p ?o . }';
+if (!$store->isSetUp())
+  $store->setUp();
 
 $query = 'INSERT INTO <http://localhost/iksce/sparql>
 {
-  <http://example/book1> a "An old book" .
+  <http://example/book1> a "A lovely book" .
 }';
 
-/*
-$q = ' INSERT DATA { http://localhost/iksce/taxonomy/term/5 a http://dbpedia.org/resource/duckie . }';
-
-$rows = $store->query($q, 'rows');
-
-print_r($rows);
-
-foreach ($result as $rows) {
-       echo "<li>". $result . "</li>\n";
-    }
-*/
+$res = $store->query($query);
+echo var_dump($store->getErrors());
+echo "<br><br>executed INSERT, returned: ";
+echo var_dump($res);
 ?>
